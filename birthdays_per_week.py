@@ -18,20 +18,11 @@ def get_birthdays_per_week(users):
         birthday = person["birthday"]
         birthday = birthday.replace(year=today.year)
         #check the day of the week for birthday and if the birthday is next week
-        if birthday.weekday() == 0 and (birthday - today).days in range(1, 8):
-            result_dict["Monday"].append(person["name"])
-        elif birthday.weekday() == 1 and (birthday - today).days in range(2, 9):
-            result_dict["Tuesday"].append(person["name"])
-        elif birthday.weekday() == 2 and (birthday - today).days in range(3, 10):
-            result_dict["Wednesday"].append(person["name"])
-        elif birthday.weekday() == 3 and (birthday - today).days in range(4, 11):
-            result_dict["Thursday"].append(person["name"])
-        elif birthday.weekday() == 4 and (birthday - today).days in range(5, 12):
-            result_dict["Friday"].append(person["name"])
-        elif birthday.weekday() == 5 and (birthday - today).days in range(-1, 6):
-            result_dict["Monday"].append(person["name"])
-        elif birthday.weekday() == 6 and (birthday - today).days in range(0, 7):
-            result_dict["Monday"].append(person["name"])
+        if birthday.strftime('%A') in result_dict.keys() and birthday.isocalendar()[1] == today.isocalendar()[1] + 1:
+            key = birthday.strftime('%A')
+            result_dict[key].append(person['name'])
+        elif birthday.strftime('%A') in ('Saturday', 'Sunday') and birthday.isocalendar()[1] == today.isocalendar()[1]:
+            result_dict['Monday'].append(person['name'])
 
     # print the result
     for day, names in result_dict.items():
@@ -40,12 +31,12 @@ def get_birthdays_per_week(users):
 
 #implement the user list
 users = [
-    {"name": "Kate", "birthday": datetime.date(1984, 8, 19)},
-    {"name": "Pavel", "birthday": datetime.date(1995, 8, 21)},
-    {"name": "Bil", "birthday": datetime.date(1998, 8, 22)},
-    {"name": "Anna", "birthday": datetime.date(1992, 8, 24)},
-    {"name": "Helen", "birthday": datetime.date(1986, 8, 20)},
-    {"name": "Tom", "birthday": datetime.date(1994, 8, 25)},
+    {"name": "Kate", "birthday": datetime.date(1984, 8, 29)},
+    {"name": "Pavel", "birthday": datetime.date(1995, 8, 28)},
+    {"name": "Bil", "birthday": datetime.date(1998, 8, 31)},
+    {"name": "Anna", "birthday": datetime.date(1992, 8, 30)},
+    {"name": "Helen", "birthday": datetime.date(1986, 9, 20)},
+    {"name": "Tom", "birthday": datetime.date(1994, 8, 27)},
     {"name": "Robert", "birthday": datetime.date(1987, 8, 30)}
 ]
 
